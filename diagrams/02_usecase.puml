@@ -1,0 +1,51 @@
+@startuml
+skinparam defaultFontName DejaVu Sans
+skinparam dpi 150
+skinparam shadowing false
+skinparam backgroundColor white
+skinparam roundcorner 8
+skinparam ArrowColor #333333
+skinparam ClassBackgroundColor #F5F9FF
+skinparam ClassBorderColor #2F5597
+
+left to right direction
+title Диаграмма вариантов использования
+actor "Гость" as G
+actor "Клиент" as C
+actor "Менеджер" as M
+actor "Администратор" as A
+actor "Платёжная система" as P <<внешняя>>
+C -up-|> G
+rectangle "ИС «Программные продукты»" {
+  usecase "Просмотр каталога" as U1
+  usecase "Поиск и фильтрация\nпродуктов" as U2
+  usecase "Регистрация" as U3
+  usecase "Авторизация" as U4
+  usecase "Формирование корзины" as U5
+  usecase "Оформление заказа" as U6
+  usecase "Оплата заказа" as U7
+  usecase "Получение лицензионного\nключа" as U8
+  usecase "Просмотр истории заказов" as U9
+  usecase "Обработка заказов" as U10
+  usecase "Управление каталогом\nпродуктов" as U11
+  usecase "Управление пользователями" as U12
+  usecase "Формирование отчётов" as U13
+}
+G --> U1
+G --> U2
+G --> U3
+C --> U4
+C --> U5
+C --> U6
+C --> U9
+M --> U10
+M --> U11
+M --> U13
+A --> U12
+A --> U11
+P --> U7
+U6 ..> U4 : <<include>>
+U6 ..> U7 : <<include>>
+U7 ..> U8 : <<extend>>
+U2 ..> U1 : <<extend>>
+@enduml

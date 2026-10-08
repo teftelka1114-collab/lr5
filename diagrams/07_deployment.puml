@@ -1,0 +1,29 @@
+@startuml
+skinparam defaultFontName DejaVu Sans
+skinparam dpi 150
+skinparam shadowing false
+skinparam backgroundColor white
+skinparam roundcorner 8
+skinparam ArrowColor #333333
+skinparam ClassBackgroundColor #F5F9FF
+skinparam ClassBorderColor #2F5597
+
+title Диаграмма развёртывания
+node "Компьютер клиента" as N1 {
+  artifact "Веб-браузер" as br
+}
+node "Сервер приложений\n(Windows Server / IIS)" as N2 {
+  artifact "Веб-приложение\n(UI)" as ui
+  artifact "REST API\n(бизнес-логика)" as api
+}
+node "Сервер БД" as N3 {
+  database "MS SQL Server\nSoftwareProductsDB" as db
+}
+node "Внешний сервис" as N4 {
+  artifact "Платёжный шлюз" as gw
+}
+N1 --> N2 : HTTPS (443)
+ui --> api : HTTP (внутр.)
+N2 --> N3 : TCP 1433 / SQL
+api ..> N4 : HTTPS, запрос оплаты
+@enduml

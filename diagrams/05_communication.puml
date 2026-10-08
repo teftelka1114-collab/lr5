@@ -1,0 +1,26 @@
+@startuml
+skinparam defaultFontName DejaVu Sans
+skinparam dpi 150
+skinparam shadowing false
+skinparam backgroundColor white
+skinparam roundcorner 8
+skinparam ArrowColor #333333
+skinparam ClassBackgroundColor #F5F9FF
+skinparam ClassBorderColor #2F5597
+
+title Диаграмма взаимодействия (кооперации): оформление заказа
+object ":Клиент" as c
+object ":ИнтерфейсКорзины" as ui
+object ":КонтроллерЗаказов" as ctl
+object ":СервисЗаказов" as srv
+object ":Заказ" as ord
+object ":СервисПлатежей" as pay
+object ":СервисЛицензий" as lic
+c -right-> ui : 1: оформитьЗаказ()
+ui -right-> ctl : 2: POST /orders
+ctl -down-> srv : 3: создатьЗаказ()
+srv -left-> ord : 4: <<create>>
+srv -down-> pay : 5: оплатить(заказ)
+pay -right-> lic : 6: выдатьЛицензии(заказ)
+lic -up-> c : 7: ключи (через интерфейс)
+@enduml
